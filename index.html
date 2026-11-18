@@ -50,6 +50,9 @@ label.chk{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:1
 .btn{font:inherit;font-size:13px;padding:5px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;cursor:pointer;white-space:nowrap}
 .btn:hover{border-color:var(--ink)}
 .btn.wa{background:#1f7a4d;border-color:#1f7a4d;color:#fff}
+.btn.del{color:var(--warn)}
+.btn.del:hover{border-color:var(--warn);background:var(--warn-bg)}
+.btn[hidden]{display:none}
 details{grid-column:2/4;margin-top:-4px}
 summary{cursor:pointer;color:var(--muted);font-size:13px}
 .bd{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}
@@ -83,6 +86,7 @@ section.method p,section.method li{color:var(--muted);font-size:14px}
     <select id="giro"><option value="">Todos los giros</option></select>
     <select id="tier"><option value="">Todas las prioridades</option><option value="A">Prioridad A</option><option value="B">Prioridad B</option><option value="C">Prioridad C</option></select>
     <label class="chk"><input type="checkbox" id="tel"> Solo con teléfono</label>
+    <button class="btn" id="restore" hidden></button>
     <span class="count" id="count"></span>
   </div>
 
@@ -131,14 +135,25 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const tierColor = {A:"var(--a)",B:"var(--b)",C:"var(--c)"};
 
+// eliminados (se guardan en este navegador)
+const KEY = "prospectos-eliminados";
+let removed = new Set();
+try { removed = new Set(JSON.parse(localStorage.getItem(KEY) || "[]")); } catch {}
+function saveRemoved(){ try { localStorage.setItem(KEY, JSON.stringify([...removed])); } catch {} }
+const active = () => DATA.filter(d => !removed.has(d.n));
+
 // stats
-const cnt = t => DATA.filter(d => d.tier === t).length;
-$("stats").innerHTML = [
-  [DATA.length,"negocios analizados"],
-  [cnt("A"),"prioridad A"],
-  [cnt("B"),"prioridad B"],
-  [DATA.filter(d=>d.tel).length,"con teléfono público"]
-].map(([b,s]) => `<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("");
+function renderStats(){
+  const A = active(), cnt = t => A.filter(d => d.tier === t).length;
+  $("stats").innerHTML = [
+    [A.length,"negocios en la lista"],
+    [cnt("A"),"prioridad A"],
+    [cnt("B"),"prioridad B"],
+    [A.filter(d=>d.tel).length,"con teléfono público"]
+  ].map(([b,s]) => `<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("");
+  $("restore").hidden = !removed.size;
+  $("restore").textContent = `Restaurar eliminados (${removed.size})`;
+}
 
 [...new Set(DATA.map(d => d.giro))].forEach(g => {
   const o = document.createElement("option"); o.value = g; o.textContent = g; $("giro").appendChild(o);
@@ -146,10 +161,12 @@ $("stats").innerHTML = [
 
 function render(){
   const q = $("q").value.trim().toLowerCase(), g = $("giro").value, t = $("tier").value, tel = $("tel").checked;
-  const rows = DATA.filter(d =>
+  renderStats();
+  const A = active();
+  const rows = A.filter(d =>
     (!g || d.giro === g) && (!t || d.tier === t) && (!tel || d.tel) &&
     (!q || (d.name + " " + d.addr + " " + d.tel + " " + d.giro).toLowerCase().includes(q)));
-  $("count").textContent = rows.length + " de " + DATA.length;
+  $("count").textContent = rows.length + " de " + A.length;
   $("list").innerHTML = rows.map(d => `
     <div class="row">
       <div class="rank">${d.rank}</div>
@@ -170,6 +187,7 @@ function render(){
           ${d.wa ? `<a class="btn wa" href="${d.wa}" target="_blank" rel="noopener">WhatsApp</a><button class="btn" data-copy="${esc(d.tel)}">Copiar tel.</button>` : ""}
           ${d.soc_url ? `<a class="btn" href="${d.soc_url}" target="_blank" rel="noopener">Facebook</a>` : ""}
           <a class="btn" href="${d.maps}" target="_blank" rel="noopener">Google Maps</a>
+          <button class="btn del" data-del="${d.n}" title="Quitar de la lista">Eliminar</button>
         </div>
       </div>
       <details>
@@ -187,9 +205,20 @@ function render(){
 }
 ["q","giro","tier","tel"].forEach(id => $(id).addEventListener("input", render));
 $("list").addEventListener("click", async e => {
+  const del = e.target.closest("[data-del]");
+  if (del) {
+    const d = DATA.find(x => x.n === +del.dataset.del);
+    if (!confirm(`¿Eliminar «${d.name}» de la lista?`)) return;
+    removed.add(d.n); saveRemoved(); render(); toast(`«${d.name}» eliminado`);
+    return;
+  }
   const b = e.target.closest("[data-copy]"); if (!b) return;
   try { await navigator.clipboard.writeText(b.dataset.copy); toast("Teléfono copiado"); }
   catch { toast(b.dataset.copy); }
+});
+$("restore").addEventListener("click", () => {
+  if (!confirm(`¿Restaurar los ${removed.size} negocios eliminados?`)) return;
+  removed.clear(); saveRemoved(); render(); toast("Lista restaurada");
 });
 function toast(m){ const t = $("toast"); t.textContent = m; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1600); }
 render();
