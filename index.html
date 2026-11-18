@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prospectos de landing page · Hermosillo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f3;--card:#fff;--ink:#1d1d1b;--muted:#6b6a66;--line:#e6e4de;
+  --a:#1f7a4d;--a-bg:#e3f2ea;--b:#b7791f;--b-bg:#fbf1dd;--c:#8a8986;--c-bg:#eeede9;
+  --accent:#c2410c;--warn:#9a3412;--warn-bg:#fdecdf;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#161615;--card:#201f1d;--ink:#eeece6;--muted:#a3a19b;--line:#33312d;
+  --a:#5fd39a;--a-bg:#173326;--b:#e8b45a;--b-bg:#382c15;--c:#a3a19b;--c-bg:#2a2926;
+  --accent:#fb8a4c;--warn:#fdba8c;--warn-bg:#3a2216;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:32px 20px 64px}
+h1{font-size:28px;line-height:1.2;margin:0 0 6px;letter-spacing:-.02em}
+.sub{color:var(--muted);margin:0 0 24px;max-width:720px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:22px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:13px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5}
+input[type=search],select{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink)}
+input[type=search]{flex:1;min-width:180px}
+label.chk{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:14px;cursor:pointer}
+.count{color:var(--muted);font-size:13px;margin-left:auto}
+.list{display:flex;flex-direction:column;gap:8px}
+.row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center}
+.rank{font-size:20px;font-weight:700;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
+.name{font-weight:600;font-size:16px}
+.meta{color:var(--muted);font-size:13px;display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:2px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag{font-size:12px;padding:2px 8px;border-radius:99px;background:var(--c-bg);color:var(--muted)}
+.tag.warn{background:var(--warn-bg);color:var(--warn)}
+.right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;min-width:150px}
+.score{display:flex;align-items:center;gap:8px}
+.score b{font-size:20px;font-variant-numeric:tabular-nums}
+.tier{font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px}
+.tier.A{background:var(--a-bg);color:var(--a)}.tier.B{background:var(--b-bg);color:var(--b)}.tier.C{background:var(--c-bg);color:var(--c)}
+.bar{width:150px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%}
+.actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.btn{font:inherit;font-size:13px;padding:5px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--ink)}
+.btn.wa{background:#1f7a4d;border-color:#1f7a4d;color:#fff}
+details{grid-column:2/4;margin-top:-4px}
+summary{cursor:pointer;color:var(--muted);font-size:13px}
+.bd{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}
+.bd div{border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:13px}
+.bd div b{display:block;font-size:15px}
+.pitch{margin-top:10px;font-size:13.5px;border-left:3px solid var(--accent);padding:4px 0 4px 12px}
+section.method{margin-top:40px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+section.method h2{margin:0 0 10px;font-size:19px}
+section.method table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0 14px}
+section.method td,section.method th{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:top}
+section.method p,section.method li{color:var(--muted);font-size:14px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:9px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+@media (max-width:640px){
+  .row{grid-template-columns:34px 1fr}
+  .right{grid-column:1/3;align-items:flex-start;min-width:0}
+  .actions{justify-content:flex-start}
+  details{grid-column:1/3}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>¿A quién venderle primero una landing page en Hermosillo?</h1>
+  <p class="sub">52 negocios con más de 45 reseñas en Google y sin sitio web propio detectado, ordenados de la mejor a la peor rentabilidad esperada al ofrecerles una landing page. Datos tomados del reporte de investigación (noviembre 2026).</p>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="controls">
+    <input type="search" id="q" placeholder="Buscar negocio, colonia o teléfono…">
+    <select id="giro"><option value="">Todos los giros</option></select>
+    <select id="tier"><option value="">Todas las prioridades</option><option value="A">Prioridad A</option><option value="B">Prioridad B</option><option value="C">Prioridad C</option></select>
+    <label class="chk"><input type="checkbox" id="tel"> Solo con teléfono</label>
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <section class="method">
+    <h2>Cómo se calcula la puntuación (0–100)</h2>
+    <table>
+      <tr><th>Factor</th><th>Pts.</th><th>Qué mide</th></tr>
+      <tr><td>Demanda</td><td>35</td><td>Número de reseñas en Google en escala logarítmica (45 → 0 pts; 1,500 → 35 pts). Más reseñas = más clientes buscándolo en línea.</td></tr>
+      <tr><td>Valor del giro</td><td>25</td><td>Ticket promedio y cuánto investiga el cliente antes de comprar: eventos/catering 25, estética 22, pastelería 18, regalos 14, pizzería 12, cenaduría 10.</td></tr>
+      <tr><td>Brecha digital</td><td>15</td><td>Independiente sin web: 15. Plantilla gratuita (ueniweb): 12. Sucursal de cadena local: 6. Posible dominio detectado en otra fuente: 5. Posiblemente cerrado: 0 (y la puntuación total se reduce a la mitad).</td></tr>
+      <tr><td>Contactabilidad</td><td>15</td><td>Teléfono público 10, red social identificada 3, dirección 2.</td></tr>
+      <tr><td>Reputación</td><td>10</td><td>Calificación en Google (3.5 → 0; 4.8+ → 10). Sin dato: 5. Un negocio bien calificado tiene reseñas que lucir en su landing.</td></tr>
+    </table>
+    <p><b>Prioridad A</b> ≥ 72 pts · <b>B</b> 58–71 · <b>C</b> &lt; 58.</p>
+    <ul>
+      <li>Los conteos de reseñas vienen de agregadores que replican Google (Restaurant Guru, Gastroranking, Especial Evento, etc.), no de Google Maps en vivo. Cuando el conteo era multiplataforma (450° Grados) o no confirmado como de Google (JOSSE), se aplicó un descuento del 40 % en el factor de demanda.</li>
+      <li>«Sin web» significa que no se detectó dominio propio en las fuentes. Antes de llamar, abre la ficha de Google Maps y confirma que el campo «Sitio web» esté vacío o apunte solo a Facebook/Instagram.</li>
+      <li>Los enlaces de Maps son búsquedas por nombre en Hermosillo, no IDs de ficha verificados.</li>
+      <li>El ranking es una estimación para priorizar llamadas, no una garantía de cierre. Ajusta los pesos a tu experiencia de ventas.</li>
+    </ul>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA = [{"n": 40, "name": "Eventos El Marqués", "giro": "Eventos / catering", "g": "cat", "rev": 457, "rat": 4.7, "tel": "662 118 0111", "soc": "", "addr": "Ramón Valdez Ramírez 1004, Unión de Ladrilleros", "flags": [], "s_dem": 23.1, "s_val": 25, "s_cal": 9.2, "s_br": 15, "s_con": 12, "score": 84, "rank": 1, "tier": "A", "maps": "https://www.google.com/maps/search/?api=1&query=Eventos+El+Marqu%C3%A9s+Hermosillo", "wa": "https://wa.me/526621180111", "soc_url": ""}, {"n": 41, "name": "Granja Ferraris", "giro": "Eventos / catering", "g": "cat", "rev": 435, "rat": 4.7, "tel": "662 299 2037", "soc": "", "addr": "Blvd. Agustín G. del Campo, Quinta Emilia", "flags": [], "s_dem": 22.6, "s_val": 25, "s_cal": 9.2, "s_br": 15, "s_con": 12, "score": 84, "rank": 2, "tier": "A", "maps": "https://www.google.com/maps/search/?api=1&query=Granja+Ferraris+Hermosillo", "wa": "https://wa.me/526622992037", "soc_url": ""}, {"n": 3, "name": "Taquitos Mela Cenaduría", "giro": "Cenaduría", "g": "cen", "rev": 1493, "rat": 4.5, "tel": "662 310 4135", "soc": "Facebook", "addr": "Av. Dr. Paliza 115, Centro", "flags": [], "s_dem": 35.0, "s_val": 10, "s_cal": 7.7, "s_br": 15, "s_con": 15, "score": 83, "rank": 3, "tier": "A", "maps": "https://www.google.com/maps/search/?api=1&query=Taquitos+Mela+Cenadur%C3%ADa+Hermosillo", "wa": "https://wa.me/526623104135", "soc_url": ""}, {"n": 42, "name": "Salón Las Cascadas", "giro": "Eventos / catering", "g": "cat", "rev": 251, "rat": 4.7, "tel": "662 241 0010", "soc": "facebook.com/salonlascascadas", "addr": "Los Molinos 97, Las Minitas", "flags": [], "s_dem": 17.2, "s_val": 25, "s_cal": 9.2, "s_br": 15, "s_con": 15, "score": 81, "rank": 4, "tier": "A", "maps": "https://www.google.com/maps/search/?api=1&query=Sal%C3%B3n+Las+Cascadas+Hermosillo", "wa": "https://wa.me/526622410010", "soc_url": "https://www.facebook.com/salonlascascadas"}, {"n": 1, "name": "Cenaduría Santa Elena", "giro": "Cenaduría", "g": "cen", "rev": 1345, "rat": 4.6, "tel": "662 458 4568", "soc": "", "addr": "C. 12 de Octubre 181", "flags": [], "s_dem": 33.9, "s_val": 10, "s_cal": 8.5, "s_br": 15, "s_con": 12, "score": 79, "rank": 5, "tier": "A", "maps": "https://www.google.com/maps/search/?api=1&query=Cenadur%C3%ADa+Santa+Elena+Hermosillo", "wa": "https://wa.me/526624584568", "soc_url": ""}, {"n": 13, "name": "La Brújula Pizza", "giro": "Pizzería", "g": "piz", "rev": 1008, "rat": 4.5, "tel": "662 688 1572", "soc": "", "addr": "Blvd. José María Morelos 63", "flags": [], "s_dem": 31.0, "s_val": 12, "s_cal": 7.7, "s_br": 15, "s_con": 12, "score": 78, "rank": 6, "tier": "A", "maps": "https://www.google.com/maps/search/?api=1&query=La+Br%C3%BAjula+Pizza+Hermosillo", "wa": "https://wa.me/526626881572", "soc_url": ""}, {"n": 39, "name": "Hacienda Las Minitas", "giro": "Eventos / catering", "g": "cat", "rev": 588, "rat": 4.8, "tel": "662 184 7562", "soc": "", "addr": "Los Molinos 97", "flags": ["webpos"], "s_dem": 25.7, "s_val": 25, "s_cal": 10.0, "s_br": 5, "s_con": 12, "score": 78, "rank": 7, "tier": "A", "maps": "https://www.google.com/maps/search/?api=1&query=Hacienda+Las+Minitas+Hermosillo", "wa": "https://wa.me/526621847562", "soc_url": ""}, {"n": 44, "name": "Eventos Las Perlas", "giro": "Eventos / catering", "g": "cat", "rev": 182, "rat": 4.8, "tel": "662 343 0656", "soc": "", "addr": "Carretera 26 km 10.5, Campestre Las Perlas", "flags": [], "s_dem": 13.9, "s_val": 25, "s_cal": 10.0, "s_br": 15, "s_con": 12, "score": 76, "rank": 8, "tier": "A", "maps": "https://www.google.com/maps/search/?api=1&query=Eventos+Las+Perlas+Hermosillo", "wa": "https://wa.me/526623430656", "soc_url": ""}, {"n": 47, "name": "Jardín Los Laureles", "giro": "Eventos / catering", "g": "cat", "rev": 123, "rat": 4.8, "tel": "662 250 0762", "soc": "facebook.com/JardinLosLaurelesESC", "addr": "Blvd. Santa Clara 57, Costa del Sol", "flags": [], "s_dem": 10.0, "s_val": 25, "s_cal": 10.0, "s_br": 15, "s_con": 15, "score": 75, "rank": 9, "tier": "A", "maps": "https://www.google.com/maps/search/?api=1&query=Jard%C3%ADn+Los+Laureles+Hermosillo", "wa": "https://wa.me/526622500762", "soc_url": "https://www.facebook.com/JardinLosLaurelesESC"}, {"n": 14, "name": "450° Grados Pizza a la Leña", "giro": "Pizzería", "g": "piz", "rev": 1070, "rat": null, "tel": "662 264 8999", "soc": "", "addr": "Blvd. Juan Navarrete 377", "flags": ["multi"], "s_dem": 26.5, "s_val": 12, "s_cal": 5, "s_br": 15, "s_con": 12, "score": 71, "rank": 10, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=450%C2%B0+Grados+Pizza+a+la+Le%C3%B1a+Hermosillo", "wa": "https://wa.me/526622648999", "soc_url": ""}, {"n": 30, "name": "Panadería Larina", "giro": "Pastelería / repostería", "g": "pas", "rev": 608, "rat": 4.9, "tel": "", "soc": "", "addr": "Av. Ángel García Aburto esq. Román Yocupicio, Loma Linda", "flags": [], "s_dem": 26.0, "s_val": 18, "s_cal": 10, "s_br": 15, "s_con": 2, "score": 71, "rank": 11, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Panader%C3%ADa+Larina+Hermosillo", "wa": "", "soc_url": ""}, {"n": 48, "name": "Salón de Eventos Antigua Hermosillo", "giro": "Eventos / catering", "g": "cat", "rev": 123, "rat": 4.6, "tel": "662 111 3485", "soc": "", "addr": "Calle Jesús García 64, Centro", "flags": [], "s_dem": 10.0, "s_val": 25, "s_cal": 8.5, "s_br": 15, "s_con": 12, "score": 70, "rank": 12, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Sal%C3%B3n+de+Eventos+Antigua+Hermosillo+Hermosillo", "wa": "https://wa.me/526621113485", "soc_url": ""}, {"n": 4, "name": "La Cenaduría Antojitos Mexicanos", "giro": "Cenaduría", "g": "cen", "rev": 362, "rat": 4.6, "tel": "662 310 4040", "soc": "Facebook", "addr": "Juan de Dios Arias 13", "flags": [], "s_dem": 20.8, "s_val": 10, "s_cal": 8.5, "s_br": 15, "s_con": 15, "score": 69, "rank": 13, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=La+Cenadur%C3%ADa+Antojitos+Mexicanos+Hermosillo", "wa": "https://wa.me/526623104040", "soc_url": ""}, {"n": 5, "name": "Cenaduría La Quinta", "giro": "Cenaduría", "g": "cen", "rev": 525, "rat": 4.4, "tel": "662 688 3620", "soc": "", "addr": "Paseo de las Quintas 5959, Las Quintas", "flags": [], "s_dem": 24.5, "s_val": 10, "s_cal": 6.9, "s_br": 15, "s_con": 12, "score": 68, "rank": 14, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Cenadur%C3%ADa+La+Quinta+Hermosillo", "wa": "https://wa.me/526626883620", "soc_url": ""}, {"n": 2, "name": "Cenaduría Yáñez", "giro": "Cenaduría", "g": "cen", "rev": 1455, "rat": 4.2, "tel": "662 214 1872", "soc": "", "addr": "Calle Gral. José María Yáñez 7 Sur", "flags": ["webpos"], "s_dem": 34.7, "s_val": 10, "s_cal": 5.4, "s_br": 5, "s_con": 12, "score": 67, "rank": 15, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Cenadur%C3%ADa+Y%C3%A1%C3%B1ez+Hermosillo", "wa": "https://wa.me/526622141872", "soc_url": ""}, {"n": 8, "name": "Cenaduría El Tejabán", "giro": "Cenaduría", "g": "cen", "rev": 350, "rat": 4.3, "tel": "662 465 2352", "soc": "Facebook", "addr": "Blvd. Musaro, Capomo y Venado Cola Blanca", "flags": [], "s_dem": 20.5, "s_val": 10, "s_cal": 6.2, "s_br": 15, "s_con": 15, "score": 67, "rank": 16, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Cenadur%C3%ADa+El+Tejab%C3%A1n+Hermosillo", "wa": "https://wa.me/526624652352", "soc_url": ""}, {"n": 15, "name": "Reyes Pizza (Gran Plaza)", "giro": "Pizzería", "g": "piz", "rev": 436, "rat": 4.0, "tel": "662 135 3838", "soc": "", "addr": "Gran Plaza, local 580-P", "flags": [], "s_dem": 22.7, "s_val": 12, "s_cal": 3.8, "s_br": 15, "s_con": 12, "score": 66, "rank": 17, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Reyes+Pizza+%28Gran+Plaza%29+Hermosillo", "wa": "https://wa.me/526621353838", "soc_url": ""}, {"n": 19, "name": "Pizza Martinelly's", "giro": "Pizzería", "g": "piz", "rev": 255, "rat": 4.8, "tel": "662 251 4701", "soc": "", "addr": "Blvd. Paseo de las Lomas 45", "flags": [], "s_dem": 17.3, "s_val": 12, "s_cal": 10.0, "s_br": 15, "s_con": 12, "score": 66, "rank": 18, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Pizza+Martinelly%27s+Hermosillo", "wa": "https://wa.me/526622514701", "soc_url": ""}, {"n": 7, "name": "Cenaduría NM", "giro": "Cenaduría", "g": "cen", "rev": 319, "rat": 4.5, "tel": "662 342 3654", "soc": "", "addr": "Av. Xólotl 109", "flags": [], "s_dem": 19.5, "s_val": 10, "s_cal": 7.7, "s_br": 15, "s_con": 12, "score": 64, "rank": 19, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Cenadur%C3%ADa+NM+Hermosillo", "wa": "https://wa.me/526623423654", "soc_url": ""}, {"n": 22, "name": "Fratelli Pizzería", "giro": "Pizzería", "g": "piz", "rev": 195, "rat": 4.7, "tel": "662 119 0391", "soc": "", "addr": "C. Benito Juárez 393", "flags": [], "s_dem": 14.6, "s_val": 12, "s_cal": 9.2, "s_br": 15, "s_con": 12, "score": 63, "rank": 20, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Fratelli+Pizzer%C3%ADa+Hermosillo", "wa": "https://wa.me/526621190391", "soc_url": ""}, {"n": 43, "name": "Eventos ByM", "giro": "Eventos / catering", "g": "cat", "rev": 189, "rat": 4.6, "tel": "", "soc": "", "addr": "", "flags": [], "s_dem": 14.3, "s_val": 25, "s_cal": 8.5, "s_br": 15, "s_con": 0, "score": 63, "rank": 21, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Eventos+ByM+Hermosillo", "wa": "", "soc_url": ""}, {"n": 34, "name": "Pastelería Graciela Iñigo", "giro": "Pastelería / repostería", "g": "pas", "rev": 112, "rat": 4.7, "tel": "662 216 8162", "soc": "", "addr": "", "flags": [], "s_dem": 9.1, "s_val": 18, "s_cal": 9.2, "s_br": 15, "s_con": 10, "score": 61, "rank": 22, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Pasteler%C3%ADa+Graciela+I%C3%B1igo+Hermosillo", "wa": "https://wa.me/526622168162", "soc_url": ""}, {"n": 45, "name": "Casa Ava", "giro": "Eventos / catering", "g": "cat", "rev": 149, "rat": 4.6, "tel": "", "soc": "", "addr": "", "flags": [], "s_dem": 12.0, "s_val": 25, "s_cal": 8.5, "s_br": 15, "s_con": 0, "score": 60, "rank": 23, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Casa+Ava+Hermosillo", "wa": "", "soc_url": ""}, {"n": 6, "name": "Cenaduría 272", "giro": "Cenaduría", "g": "cen", "rev": 358, "rat": 4.6, "tel": "", "soc": "Facebook", "addr": "Ángel García Aburto 272", "flags": [], "s_dem": 20.7, "s_val": 10, "s_cal": 8.5, "s_br": 15, "s_con": 5, "score": 59, "rank": 24, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Cenadur%C3%ADa+272+Hermosillo", "wa": "", "soc_url": ""}, {"n": 23, "name": "La Piccola Pizzería", "giro": "Pizzería", "g": "piz", "rev": 155, "rat": 4.5, "tel": "662 212 3913", "soc": "", "addr": "C. Olivares 320 A", "flags": [], "s_dem": 12.3, "s_val": 12, "s_cal": 7.7, "s_br": 15, "s_con": 12, "score": 59, "rank": 25, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=La+Piccola+Pizzer%C3%ADa+Hermosillo", "wa": "https://wa.me/526622123913", "soc_url": ""}, {"n": 49, "name": "Hacienda La Flor Eventos", "giro": "Eventos / catering", "g": "cat", "rev": 72, "rat": null, "tel": "662 112 5693", "soc": "", "addr": "Calle Chanate 219", "flags": ["template"], "s_dem": 4.7, "s_val": 25, "s_cal": 5, "s_br": 12, "s_con": 12, "score": 59, "rank": 26, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Hacienda+La+Flor+Eventos+Hermosillo", "wa": "https://wa.me/526621125693", "soc_url": ""}, {"n": 46, "name": "Salón CTM", "giro": "Eventos / catering", "g": "cat", "rev": 130, "rat": 4.5, "tel": "", "soc": "", "addr": "", "flags": [], "s_dem": 10.6, "s_val": 25, "s_cal": 7.7, "s_br": 15, "s_con": 0, "score": 58, "rank": 27, "tier": "B", "maps": "https://www.google.com/maps/search/?api=1&query=Sal%C3%B3n+CTM+Hermosillo", "wa": "", "soc_url": ""}, {"n": 51, "name": "Lynda's Artesanías", "giro": "Tienda de regalos", "g": "reg", "rev": 274, "rat": 4.5, "tel": "", "soc": "", "addr": "Av. Rosales, Centro", "flags": [], "s_dem": 18.0, "s_val": 14, "s_cal": 7.7, "s_br": 15, "s_con": 2, "score": 57, "rank": 28, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Lynda%27s+Artesan%C3%ADas+Hermosillo", "wa": "", "soc_url": ""}, {"n": 52, "name": "JOSSE Salón Spa", "giro": "Estética / clínica", "g": "est", "rev": 77, "rat": 5.0, "tel": "662 213 9588", "soc": "", "addr": "", "flags": ["unconf"], "s_dem": 0.3, "s_val": 22, "s_cal": 10, "s_br": 15, "s_con": 10, "score": 57, "rank": 29, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=JOSSE+Sal%C3%B3n+Spa+Hermosillo", "wa": "https://wa.me/526622139588", "soc_url": ""}, {"n": 27, "name": "Pizza The Best (Puerta Real)", "giro": "Pizzería", "g": "piz", "rev": 294, "rat": null, "tel": "662 135 8888", "soc": "", "addr": "Gaspar Luken Escalante 802", "flags": ["chain"], "s_dem": 18.7, "s_val": 12, "s_cal": 5, "s_br": 6, "s_con": 12, "score": 54, "rank": 30, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Pizza+The+Best+%28Puerta+Real%29+Hermosillo", "wa": "https://wa.me/526621358888", "soc_url": ""}, {"n": 9, "name": "Cenaduría Santiago", "giro": "Cenaduría", "g": "cen", "rev": 253, "rat": 3.5, "tel": "662 218 1313", "soc": "", "addr": "Blvd. José López Portillo 544", "flags": [], "s_dem": 17.2, "s_val": 10, "s_cal": 0, "s_br": 15, "s_con": 12, "score": 54, "rank": 31, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Cenadur%C3%ADa+Santiago+Hermosillo", "wa": "https://wa.me/526622181313", "soc_url": ""}, {"n": 18, "name": "Rafaelos Pizzería Centro", "giro": "Pizzería", "g": "piz", "rev": 253, "rat": 4.3, "tel": "662 217 0977", "soc": "", "addr": "Morelia 182, Centro", "flags": ["chain"], "s_dem": 17.2, "s_val": 12, "s_cal": 6.2, "s_br": 6, "s_con": 12, "score": 53, "rank": 32, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Rafaelos+Pizzer%C3%ADa+Centro+Hermosillo", "wa": "https://wa.me/526622170977", "soc_url": ""}, {"n": 50, "name": "Local de eventos El Relajo", "giro": "Eventos / catering", "g": "cat", "rev": 56, "rat": 4.7, "tel": "", "soc": "", "addr": "Arizona 117, San Benito", "flags": [], "s_dem": 2.2, "s_val": 25, "s_cal": 9.2, "s_br": 15, "s_con": 2, "score": 53, "rank": 33, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Local+de+eventos+El+Relajo+Hermosillo", "wa": "", "soc_url": ""}, {"n": 31, "name": "Pastello Navarrete", "giro": "Pastelería / repostería", "g": "pas", "rev": 286, "rat": 4.5, "tel": "", "soc": "", "addr": "Blvd. Juan Navarrete, Paseo 111 int. 6", "flags": ["chain"], "s_dem": 18.5, "s_val": 18, "s_cal": 7.7, "s_br": 6, "s_con": 2, "score": 52, "rank": 34, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Pastello+Navarrete+Hermosillo", "wa": "", "soc_url": ""}, {"n": 32, "name": "Pastello Centenario", "giro": "Pastelería / repostería", "g": "pas", "rev": 225, "rat": 4.8, "tel": "", "soc": "", "addr": "Av. Manuel Z. Cubillas 53, Centenario", "flags": ["chain"], "s_dem": 16.1, "s_val": 18, "s_cal": 10.0, "s_br": 6, "s_con": 2, "score": 52, "rank": 35, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Pastello+Centenario+Hermosillo", "wa": "", "soc_url": ""}, {"n": 10, "name": "Villa Sol Cenaduría", "giro": "Cenaduría", "g": "cen", "rev": 86, "rat": 4.6, "tel": "662 416 6140", "soc": "", "addr": "Blvd. Villa Hermosa", "flags": [], "s_dem": 6.5, "s_val": 10, "s_cal": 8.5, "s_br": 15, "s_con": 12, "score": 52, "rank": 36, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Villa+Sol+Cenadur%C3%ADa+Hermosillo", "wa": "https://wa.me/526624166140", "soc_url": ""}, {"n": 20, "name": "Pizzería Las Lomas", "giro": "Pizzería", "g": "piz", "rev": 290, "rat": 3.9, "tel": "", "soc": "", "addr": "Luis Barragán 38", "flags": [], "s_dem": 18.6, "s_val": 12, "s_cal": 3.1, "s_br": 15, "s_con": 2, "score": 51, "rank": 37, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Pizzer%C3%ADa+Las+Lomas+Hermosillo", "wa": "", "soc_url": ""}, {"n": 37, "name": "Mundo Pastelero (insumos)", "giro": "Pastelería / repostería", "g": "pas", "rev": 53, "rat": 5.0, "tel": "", "soc": "Facebook", "addr": "Periférico Norte 165", "flags": [], "s_dem": 1.6, "s_val": 18, "s_cal": 10, "s_br": 15, "s_con": 5, "score": 50, "rank": 38, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Mundo+Pastelero+%28insumos%29+Hermosillo", "wa": "", "soc_url": ""}, {"n": 38, "name": "Panadería y Pastelería San Francisco Quiroga", "giro": "Pastelería / repostería", "g": "pas", "rev": 48, "rat": 4.1, "tel": "662 214 8461", "soc": "", "addr": "Blvd. Quiroga", "flags": [], "s_dem": 0.6, "s_val": 18, "s_cal": 4.6, "s_br": 15, "s_con": 12, "score": 50, "rank": 39, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Panader%C3%ADa+y+Pasteler%C3%ADa+San+Francisco+Quiroga+Hermosillo", "wa": "https://wa.me/526622148461", "soc_url": ""}, {"n": 17, "name": "Rafaelos Pizza Juárez", "giro": "Pizzería", "g": "piz", "rev": 408, "rat": 4.4, "tel": "", "soc": "", "addr": "C. Benito Juárez 352, local 4", "flags": ["chain"], "s_dem": 22.0, "s_val": 12, "s_cal": 6.9, "s_br": 6, "s_con": 2, "score": 49, "rank": 40, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Rafaelos+Pizza+Ju%C3%A1rez+Hermosillo", "wa": "", "soc_url": ""}, {"n": 21, "name": "Rin Rin Pizza (Pueblo Bajo)", "giro": "Pizzería", "g": "piz", "rev": 229, "rat": 3.9, "tel": "662 261 3700", "soc": "", "addr": "Av. Pueblo Bajo 99B", "flags": ["chain"], "s_dem": 16.2, "s_val": 12, "s_cal": 3.1, "s_br": 6, "s_con": 12, "score": 49, "rank": 41, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Rin+Rin+Pizza+%28Pueblo+Bajo%29+Hermosillo", "wa": "https://wa.me/526622613700", "soc_url": ""}, {"n": 33, "name": "Pastelería Pastello (otra sucursal)", "giro": "Pastelería / repostería", "g": "pas", "rev": 166, "rat": 4.6, "tel": "", "soc": "Facebook", "addr": "", "flags": ["chain"], "s_dem": 13.0, "s_val": 18, "s_cal": 8.5, "s_br": 6, "s_con": 3, "score": 48, "rank": 42, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Pasteler%C3%ADa+Pastello+%28otra+sucursal%29+Hermosillo", "wa": "", "soc_url": ""}, {"n": 12, "name": "Cenaduría El Colibrí", "giro": "Cenaduría", "g": "cen", "rev": 65, "rat": 4.4, "tel": "662 143 0490", "soc": "", "addr": "Col. Luis Donaldo Colosio", "flags": [], "s_dem": 3.7, "s_val": 10, "s_cal": 6.9, "s_br": 15, "s_con": 12, "score": 48, "rank": 43, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Cenadur%C3%ADa+El+Colibr%C3%AD+Hermosillo", "wa": "https://wa.me/526621430490", "soc_url": ""}, {"n": 36, "name": "Tranvía Repostería y Café", "giro": "Pastelería / repostería", "g": "pas", "rev": 67, "rat": 4.8, "tel": "", "soc": "", "addr": "", "flags": [], "s_dem": 4.0, "s_val": 18, "s_cal": 10.0, "s_br": 15, "s_con": 0, "score": 47, "rank": 44, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Tranv%C3%ADa+Reposter%C3%ADa+y+Caf%C3%A9+Hermosillo", "wa": "", "soc_url": ""}, {"n": 28, "name": "Pizza the bestt (Pueblo Bajo)", "giro": "Pizzería", "g": "piz", "rev": 57, "rat": null, "tel": "662 261 9742", "soc": "", "addr": "Av. Pueblo Bajo", "flags": [], "s_dem": 2.4, "s_val": 12, "s_cal": 5, "s_br": 15, "s_con": 12, "score": 46, "rank": 45, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Pizza+the+bestt+%28Pueblo+Bajo%29+Hermosillo", "wa": "https://wa.me/526622619742", "soc_url": ""}, {"n": 24, "name": "Benji's Pizza", "giro": "Pizzería", "g": "piz", "rev": 133, "rat": 4.4, "tel": "", "soc": "", "addr": "", "flags": [], "s_dem": 10.8, "s_val": 12, "s_cal": 6.9, "s_br": 15, "s_con": 0, "score": 45, "rank": 46, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Benji%27s+Pizza+Hermosillo", "wa": "", "soc_url": ""}, {"n": 26, "name": "The Best Pizza (Solidaridad)", "giro": "Pizzería", "g": "piz", "rev": 326, "rat": 3.7, "tel": "", "soc": "", "addr": "Blvd. Solidaridad 698", "flags": ["chain"], "s_dem": 19.8, "s_val": 12, "s_cal": 1.5, "s_br": 6, "s_con": 2, "score": 41, "rank": 47, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=The+Best+Pizza+%28Solidaridad%29+Hermosillo", "wa": "", "soc_url": ""}, {"n": 35, "name": "Suspiros Pastelerías Solidaridad", "giro": "Pastelería / repostería", "g": "pas", "rev": 70, "rat": 4.3, "tel": "", "soc": "Facebook", "addr": "Col. Solidaridad", "flags": ["chain"], "s_dem": 4.4, "s_val": 18, "s_cal": 6.2, "s_br": 6, "s_con": 5, "score": 40, "rank": 48, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Suspiros+Pasteler%C3%ADas+Solidaridad+Hermosillo", "wa": "", "soc_url": ""}, {"n": 25, "name": "Pato's Pizza", "giro": "Pizzería", "g": "piz", "rev": 79, "rat": 4.3, "tel": "", "soc": "", "addr": "", "flags": [], "s_dem": 5.6, "s_val": 12, "s_cal": 6.2, "s_br": 15, "s_con": 0, "score": 39, "rank": 49, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Pato%27s+Pizza+Hermosillo", "wa": "", "soc_url": ""}, {"n": 11, "name": "Cenaduría Rosita", "giro": "Cenaduría", "g": "cen", "rev": 77, "rat": 4.5, "tel": "", "soc": "", "addr": "", "flags": [], "s_dem": 5.4, "s_val": 10, "s_cal": 7.7, "s_br": 15, "s_con": 0, "score": 38, "rank": 50, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Cenadur%C3%ADa+Rosita+Hermosillo", "wa": "", "soc_url": ""}, {"n": 29, "name": "Mr. Bigo's Pizza", "giro": "Pizzería", "g": "piz", "rev": 68, "rat": 3.4, "tel": "", "soc": "", "addr": "", "flags": [], "s_dem": 4.1, "s_val": 12, "s_cal": 0, "s_br": 15, "s_con": 0, "score": 31, "rank": 51, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Mr.+Bigo%27s+Pizza+Hermosillo", "wa": "", "soc_url": ""}, {"n": 16, "name": "Rafaelo's Pizzería (Monte Carlo)", "giro": "Pizzería", "g": "piz", "rev": 422, "rat": 4.1, "tel": "", "soc": "", "addr": "De los Campos Elíseos 64, local 10", "flags": ["chain", "closed"], "s_dem": 22.3, "s_val": 12, "s_cal": 4.6, "s_br": 0, "s_con": 2, "score": 20, "rank": 52, "tier": "C", "maps": "https://www.google.com/maps/search/?api=1&query=Rafaelo%27s+Pizzer%C3%ADa+%28Monte+Carlo%29+Hermosillo", "wa": "", "soc_url": ""}];
+const PITCH = {
+  "cat":"Las parejas y familias comparan 5–10 salones antes de una boda o XV años. Una landing con galería, capacidad, paquetes y botón de WhatsApp para cotizar convierte esas búsquedas en citas.",
+  "est":"Reservas de cita 24/7, lista de servicios con precios y fotos de antes/después. Reduce mensajes repetidos por WhatsApp.",
+  "pas":"Catálogo de pasteles personalizados con formulario de pedido (fecha, sabor, tamaño). Los pedidos de cumpleaños y eventos se deciden en línea.",
+  "reg":"Catálogo de productos y arreglos con pedido por WhatsApp; útil para temporadas fuertes (14 de feb., día de las madres, Navidad).",
+  "piz":"Menú con precios, promociones y pedido directo por WhatsApp para dejar de pagar comisión a apps de delivery.",
+  "cen":"Menú, horario, ubicación y pedidos para llevar por WhatsApp. Ideal si las reseñas mencionan dudas de horario o formas de pago."
+};
+const FLAG = {
+  chain:"Cadena local: verificar web corporativa",
+  webpos:"Otra fuente muestra posible web: verificar",
+  closed:"Posiblemente cerrado",
+  multi:"Reseñas multiplataforma",
+  unconf:"Reseñas no confirmadas de Google",
+  template:"Solo plantilla gratuita (upgrade)"
+};
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const tierColor = {A:"var(--a)",B:"var(--b)",C:"var(--c)"};
+
+// stats
+const cnt = t => DATA.filter(d => d.tier === t).length;
+$("stats").innerHTML = [
+  [DATA.length,"negocios analizados"],
+  [cnt("A"),"prioridad A"],
+  [cnt("B"),"prioridad B"],
+  [DATA.filter(d=>d.tel).length,"con teléfono público"]
+].map(([b,s]) => `<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("");
+
+[...new Set(DATA.map(d => d.giro))].forEach(g => {
+  const o = document.createElement("option"); o.value = g; o.textContent = g; $("giro").appendChild(o);
+});
+
+function render(){
+  const q = $("q").value.trim().toLowerCase(), g = $("giro").value, t = $("tier").value, tel = $("tel").checked;
+  const rows = DATA.filter(d =>
+    (!g || d.giro === g) && (!t || d.tier === t) && (!tel || d.tel) &&
+    (!q || (d.name + " " + d.addr + " " + d.tel + " " + d.giro).toLowerCase().includes(q)));
+  $("count").textContent = rows.length + " de " + DATA.length;
+  $("list").innerHTML = rows.map(d => `
+    <div class="row">
+      <div class="rank">${d.rank}</div>
+      <div>
+        <div class="name">${esc(d.name)}</div>
+        <div class="meta">
+          <span>${esc(d.giro)}</span>
+          <span>${d.rev.toLocaleString("es-MX")} reseñas${d.rat ? " · ★ " + d.rat : ""}</span>
+          ${d.addr ? `<span>${esc(d.addr)}</span>` : ""}
+          ${d.tel ? `<span>Tel. ${esc(d.tel)}</span>` : `<span>Sin teléfono capturado</span>`}
+        </div>
+        ${d.flags.length ? `<div class="tags">${d.flags.map(f => `<span class="tag ${f==="template"?"":"warn"}">${FLAG[f]}</span>`).join("")}</div>` : ""}
+      </div>
+      <div class="right">
+        <div class="score"><span class="tier ${d.tier}">${d.tier}</span><b>${d.score}</b></div>
+        <div class="bar"><i style="width:${d.score}%;background:${tierColor[d.tier]}"></i></div>
+        <div class="actions">
+          ${d.wa ? `<a class="btn wa" href="${d.wa}" target="_blank" rel="noopener">WhatsApp</a><button class="btn" data-copy="${esc(d.tel)}">Copiar tel.</button>` : ""}
+          ${d.soc_url ? `<a class="btn" href="${d.soc_url}" target="_blank" rel="noopener">Facebook</a>` : ""}
+          <a class="btn" href="${d.maps}" target="_blank" rel="noopener">Google Maps</a>
+        </div>
+      </div>
+      <details>
+        <summary>Por qué está aquí</summary>
+        <div class="bd">
+          <div>Demanda<b>${d.s_dem} / 35</b></div>
+          <div>Valor del giro<b>${d.s_val} / 25</b></div>
+          <div>Brecha digital<b>${d.s_br} / 15</b></div>
+          <div>Contactabilidad<b>${d.s_con} / 15</b></div>
+          <div>Reputación<b>${d.s_cal} / 10</b></div>
+        </div>
+        <div class="pitch"><b>Argumento de venta:</b> ${PITCH[d.g]}</div>
+      </details>
+    </div>`).join("") || `<p style="color:var(--muted)">Ningún negocio coincide con los filtros.</p>`;
+}
+["q","giro","tier","tel"].forEach(id => $(id).addEventListener("input", render));
+$("list").addEventListener("click", async e => {
+  const b = e.target.closest("[data-copy]"); if (!b) return;
+  try { await navigator.clipboard.writeText(b.dataset.copy); toast("Teléfono copiado"); }
+  catch { toast(b.dataset.copy); }
+});
+function toast(m){ const t = $("toast"); t.textContent = m; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1600); }
+render();
+</script>
+</body>
+</html>
